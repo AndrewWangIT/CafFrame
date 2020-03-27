@@ -1,2 +1,2 @@
 # CafFrame
-base netcore
+   base aspnetcore 。

@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Caf\AmbientAuditing.cs" />
+    <Compile Remove="Caf\AuditingContractResolver.cs" />
+    <Compile Remove="Caf\AuditingHelper.cs" />
+    <Compile Remove="Caf\AuditingManager.cs" />
+    <Compile Remove="Caf\AuditLogContributionContext.cs" />
+    <Compile Remove="Caf\AuditLogContributor.cs" />
+    <Compile Remove="Caf\AuditLogInfo.cs" />
+    <Compile Remove="Caf\AuditLogScope.cs" />
+    <Compile Remove="Caf\DisableAuditingAttribute.cs" />
+    <Compile Remove="Caf\IAmbientAuditing.cs" />
+    <Compile Remove="Caf\IAuditingEnabled.cs" />
+    <Compile Remove="Caf\IAuditingHelper.cs" />
+    <Compile Remove="Caf\IAuditingManager.cs" />
+    <Compile Remove="Caf\IAuditLogSaveHandle.cs" />
+    <Compile Remove="Caf\IAuditLogScope.cs" />
+    <Compile Remove="Caf\IAuditSerializer.cs" />
+    <Compile Remove="Caf\JsonNetAuditSerializer.cs" />
+    <Compile Remove="Caf\SimpleLogAuditingStore.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Caf.Core" Version="1.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+</Project>

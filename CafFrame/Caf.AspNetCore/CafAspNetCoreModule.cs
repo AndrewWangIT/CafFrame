@@ -15,6 +15,7 @@ using Caf.Core.Caf.File;
 
 namespace Capgemini.Frame.AspNetCore
 {
+    
     public class CafAspNetCoreModule : CafModule
     {
         private const string _defaultCorsPolicyName = "_defaultCorsPolicyName";

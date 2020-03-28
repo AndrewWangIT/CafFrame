@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -55,7 +56,7 @@ namespace CafApi
                 options.JsonSerializerOptions.PropertyNameCaseInsensitive = false;
             }).AddControllersAsServices().AddMvcLocalization();
 
-           
+           context.Services.AddDynamicWebApi();
             #region swagger
             context.Services.AddSwaggerGen(options =>
             { 
@@ -92,13 +93,13 @@ namespace CafApi
                         }
                     }, new string[] {} }
                 });
-                //var basePath = Path.GetDirectoryName(typeof(Program).Assembly.Location);//获取应用程序所在目录（绝对，不受工作目录影响，建议采用此方法获取路径）
-                //var xmlPath = Path.Combine(basePath,  "caf.WebApi.xml");
-                //var xmlPath1 = Path.Combine(basePath, "caf.Application.xml");
-                //var xmlPath2 = Path.Combine(basePath, "caf.Core.xml");
-                //options.IncludeXmlComments(xmlPath);
-                //options.IncludeXmlComments(xmlPath1);
-                //options.IncludeXmlComments(xmlPath2);
+                var basePath = Path.GetDirectoryName(typeof(Program).Assembly.Location);//获取应用程序所在目录（绝对，不受工作目录影响，建议采用此方法获取路径）
+                var xmlPath = Path.Combine(basePath,  "caf.WebApi.xml");
+                // var xmlPath1 = Path.Combine(basePath, "caf.Application.xml");
+                var xmlPath2 = Path.Combine(basePath, "caf.Core.xml");
+                options.IncludeXmlComments(xmlPath);
+                // options.IncludeXmlComments(xmlPath1);
+               // options.IncludeXmlComments(xmlPath2);
             });
             #endregion
 

@@ -12,8 +12,8 @@ namespace Caf.DynamicWebApi
             if (typeof(IDynamicWebApiService).IsAssignableFrom(typeInfo))
             {
                 if(!typeInfo.IsAbstract &&
-                   ! typeInfo.IsInterface
-                   && typeInfo.IsGenericType
+                   !typeInfo.IsInterface
+                   && !typeInfo.IsGenericType
                    && typeInfo.IsPublic)
                    {
                        return true;

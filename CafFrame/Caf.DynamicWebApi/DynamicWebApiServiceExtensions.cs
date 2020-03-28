@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.DependencyInjection;
-namespace Caf.DynamicWebApi {
+namespace Caf.DynamicWebApi
+{
     public static class DynamicWebApiServiceExtensions {
         public static IServiceCollection AddDynamicWebApi (this IServiceCollection services, DynamicWebApiOptions options) {
             if (options == null) {

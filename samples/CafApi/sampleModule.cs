@@ -23,6 +23,7 @@ using Microsoft.Extensions.Hosting;
 using CafApi.GrpcService;
 using Caf.Job;
 using Newtonsoft.Json.Serialization;
+using Microsoft.OpenApi.Models;
 
 namespace CafApi
 {

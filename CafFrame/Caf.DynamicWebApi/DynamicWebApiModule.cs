@@ -9,7 +9,7 @@ namespace Caf.DynamicWebApi
     {
         public override void AfterConfigureServices(CafConfigurationContext context)
         {
-            context.Services.AddDynamicWebApi();
+            //context.Services.AddDynamicWebApi();
         }   
     }
 }

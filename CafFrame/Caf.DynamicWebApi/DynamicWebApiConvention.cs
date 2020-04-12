@@ -8,8 +8,8 @@ using Caf.Core.Utils;
 using Caf.DynamicWebApi.Attributes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Caf.DynamicWebApi {
@@ -19,6 +19,7 @@ namespace Caf.DynamicWebApi {
                 var controllerType = controller.ControllerType.AsType ();
                 var daynamicWebApiServiceAttr = ReflectionExt.GetSingleAttributeOrDefault<DynamicWebApiAttribute> (controllerType.GetTypeInfo ());
                 if (ImplementsDynamicWebApiInterface (controllerType)) {
+                    controller.ControllerName = controller.ControllerName.RemovePostFix(WebApiConsts.ControllerPostfixes.ToArray());
                     ConfigureApplicationService (controller, daynamicWebApiServiceAttr);
                 } else {
                     if (daynamicWebApiServiceAttr != null && daynamicWebApiServiceAttr.IsEnabledFor (controllerType)) {
@@ -72,12 +73,7 @@ namespace Caf.DynamicWebApi {
         }
         protected virtual void ConfigureApiExplorer (ActionModel action) {
             if (action.ApiExplorer.IsVisible == null) {
-                var daynamicWebApiServiceAttr = ReflectionExt.GetSingleAttributeOrDefault<DynamicWebApiAttribute> (action.ActionMethod);
-                if (daynamicWebApiServiceAttr != null) {
-                    action.ApiExplorer.IsVisible =
-                        daynamicWebApiServiceAttr.IsEnabledFor (action.ActionMethod) &&
-                        daynamicWebApiServiceAttr.IsMetadataEnabledFor (action.ActionMethod);
-                }
+              action.ApiExplorer.IsVisible=true;
             }
         }
 

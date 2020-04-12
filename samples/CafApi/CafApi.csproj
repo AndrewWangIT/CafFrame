@@ -2,8 +2,25 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
+  <!-- <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+
+    <DocumentationFile>bin\Debug\netcoreapp3.1\caf.WebAPI.xml</DocumentationFile>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <OutputPath>bin\Debug\netcoreapp3.1</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netcoreapp3.1\caf.WebAPI.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+  </PropertyGroup> -->
+<PropertyGroup>
+ <DocumentationFile>Debug\netcoreapp3.1\caf.WebAPI.xml</DocumentationFile>
+</PropertyGroup>
  <ItemGroup>
  <!-- <ProjectReference Include="../../CafFrame/Caf.Core/Caf.Core.csproj" /> -->
  <ProjectReference Include="..\..\CafFrame\Caf.AspNetCore\Caf.AspNetCore.csproj" />
@@ -12,4 +29,8 @@
  <ProjectReference Include="../../CafFrame/Caf.Grpc/Caf.Grpc.csproj" />
  <ProjectReference Include="..\..\CafFrame\Caf.Job\Caf.Job.csproj" />
  </ItemGroup>
+  <ItemGroup>
+   <PackageReference Include="Swashbuckle.AspNetCore" Version="5.2.0" />
+ </ItemGroup>
+
 </Project>

@@ -10,12 +10,12 @@ namespace Caf.Grpc.Server.Configuration
         /// <summary>
         /// 存在 Grpc 服务的程序集集合
         /// </summary>
-        IReadOnlyList<Assembly> GrpcAssemblies { get; }
+        List<Assembly> GrpcAssemblies { get; set; }
 
         /// <summary>
         /// 添加包含 Grpc 服务定义的程序集
         /// </summary>
         /// <param name="serviceAssembly">服务程序集</param>
-        void AddRpcServiceAssembly(Assembly serviceAssembly);
+        GrpcServerConfiguration AddRpcServiceAssembly(Assembly serviceAssembly);
     }
 }

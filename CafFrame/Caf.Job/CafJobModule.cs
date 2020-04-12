@@ -18,19 +18,22 @@ namespace Caf.Job
         }
         public override void OnApplicationInitialization(CafApplicationContext context)
         {
-            context.ServiceProvider.GetService<SchedulerCenter>()?.Init();//初始化Job
+            //context.ServiceProvider.GetService<SchedulerCenter>()?.Init();//初始化Job
             var app = context.ServiceProvider.GetRequiredService<ObjectWrapper<IApplicationBuilder>>().Value;
             app.Use(async (context, next) =>
             {
                 //await next();
                 //context.Response.StatusCode >0 &&
-                if (
-                   context.Request.Path.Value.ToLower().StartsWith("/jobui"))
+                if (context.Request.Path.Value.ToLower().StartsWith("/jobui"))
                 {
                     context.Request.Path = "/index.html";
                     await next();
                 }
-                await next();
+                else
+                {
+                    await next();
+                }
+                
             });
 
             var manifestEmbeddedProvider =

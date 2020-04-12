@@ -15,5 +15,6 @@ namespace Caf.Grpc.Client.Utility
         /// <param name="serviceName">远程服务名称</param>
         /// <returns></returns>
         TService GetRemoteServiceForDirectConnection<TService>(string serviceName) where TService : IService<TService>;
+        Dictionary<Type, Type> TypeMapping { get; set; }
     }
 }

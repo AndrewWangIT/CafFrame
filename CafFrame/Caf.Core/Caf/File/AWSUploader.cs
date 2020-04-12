@@ -33,9 +33,6 @@ namespace Caf.Core
         public async Task<Stream> GetFileStreamAsync(string key)
         {
             var ms = new MemoryStream();
-
-            //await response.ResponseStream.CopyToAsync(ms);
-            //return ms;
             using (var client = CreateClient())
             {
                 using (var response = await client.GetObjectAsync(new GetObjectRequest()
@@ -44,7 +41,6 @@ namespace Caf.Core
                     Key = key,
                 }))
                 {
-                    //response.WriteResponseStreamToFile("C:\\Users\\Documents\\test.png");
                     await response.ResponseStream.CopyToAsync(ms);
                     ms.Position = 0;
                 }

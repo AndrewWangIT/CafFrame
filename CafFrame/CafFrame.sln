@@ -29,7 +29,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caf.Security", "Caf.Securit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caf.UnitOfWork", "Caf.UnitOfWork\Caf.UnitOfWork.csproj", "{94147B6D-DDDE-43B8-AAAF-E56F403C7DC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caf.DynamicWebApi", "Caf.DynamicWebApi\Caf.DynamicWebApi.csproj", "{9A8EC1D6-ED75-4677-9C2E-A369B4829B69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caf.DynamicWebApi", "Caf.DynamicWebApi\Caf.DynamicWebApi.csproj", "{9A8EC1D6-ED75-4677-9C2E-A369B4829B69}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CafApi", "..\samples\CafApi\CafApi.csproj", "{7C5B426A-BBD9-4111-9C9F-ADBBB5E247E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "grpcClientTest", "grpcClientTest\grpcClientTest.csproj", "{41852926-8D22-49A5-8738-85730435EEEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchmarkTest", "BenchmarkTest\BenchmarkTest.csproj", "{57774233-42F1-4072-BA27-37A76039BD81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +99,18 @@ Global
 		{9A8EC1D6-ED75-4677-9C2E-A369B4829B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A8EC1D6-ED75-4677-9C2E-A369B4829B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A8EC1D6-ED75-4677-9C2E-A369B4829B69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C5B426A-BBD9-4111-9C9F-ADBBB5E247E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C5B426A-BBD9-4111-9C9F-ADBBB5E247E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C5B426A-BBD9-4111-9C9F-ADBBB5E247E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C5B426A-BBD9-4111-9C9F-ADBBB5E247E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41852926-8D22-49A5-8738-85730435EEEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41852926-8D22-49A5-8738-85730435EEEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41852926-8D22-49A5-8738-85730435EEEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41852926-8D22-49A5-8738-85730435EEEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57774233-42F1-4072-BA27-37A76039BD81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57774233-42F1-4072-BA27-37A76039BD81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57774233-42F1-4072-BA27-37A76039BD81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57774233-42F1-4072-BA27-37A76039BD81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,9 +12,10 @@ namespace Caf.Grpc.Client.Extensions
         /// </summary>
         /// <param name="configs"></param>
         /// <param name="grpcNodes">Grpc 服务器节点列表</param>
-        public static void UseGrpcClientForDirectConnection(this CafConfigurationContext context, params GrpcServerNode[] grpcNodes)
+        public static IGrpcClientConfiguration UseGrpcClientForDirectConnection(this CafConfigurationContext context, params GrpcServerNode[] grpcNodes)
         {
-            var internalDict = context.Services.GetSingletonInstance<IGrpcClientConfiguration>().GrpcDirectConnectionConfiguration.GrpcServerNodes;
+            var clientConfiguration = context.Services.GetSingletonInstance<IGrpcClientConfiguration>();
+            var internalDict = clientConfiguration.GrpcDirectConnectionConfiguration.GrpcServerNodes;
 
             foreach (var grpcNode in grpcNodes)
             {
@@ -25,6 +26,7 @@ namespace Caf.Grpc.Client.Extensions
 
                 internalDict.Add(grpcNode.GrpcServiceName, grpcNode);
             }
+            return clientConfiguration;
         }
     }
 }

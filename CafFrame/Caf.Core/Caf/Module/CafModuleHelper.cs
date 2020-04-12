@@ -27,6 +27,7 @@ namespace Caf.Core.Module
         {
             var dependencies=new List<Type>();
             CafModule.CheckCafModuleType(moduleType);
+            var aa = moduleType.GetCustomAttributes();
             var dependencyDescriptors = moduleType.GetCustomAttributes(typeof(UsingModuleAttribute))
                 .ToList();
             foreach (var item in dependencyDescriptors)

@@ -8,21 +8,22 @@ namespace Caf.Grpc.Server.Configuration
     public class GrpcServerConfiguration : IGrpcServerConfiguration
     {
 
-        private readonly List<Assembly> _grpcAssemblies;
+        private List<Assembly> _grpcAssemblies;
         public GrpcServerConfiguration()
         {
             _grpcAssemblies = new List<Assembly>();
         }
-        public IReadOnlyList<Assembly> GrpcAssemblies => _grpcAssemblies;
 
         public string GrpcBindAddress { get; set; }
 
         /// <inheritdoc />
         public int GrpcBindPort { get; set; }
+        public List<Assembly> GrpcAssemblies { get => _grpcAssemblies; set => _grpcAssemblies = value; }
 
-        public void AddRpcServiceAssembly(Assembly serviceAssembly)
+        public GrpcServerConfiguration AddRpcServiceAssembly(Assembly serviceAssembly)
         {
             _grpcAssemblies.Add(serviceAssembly);
+            return this;
         }
     }
 }

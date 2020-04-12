@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Caf.Auditing
@@ -27,8 +28,7 @@ namespace Caf.Auditing
             var attributeType = context.ImplementationMethod.GetReflector().GetCustomAttributes(typeof(CafAuditedAttribute)).First();
             var cafAuditingOptions = context.ServiceProvider.Resolve<IObjectWrapper<CafAuditingOptions>>().Value;
             var logType = cafAuditingOptions.AttributeLogMappings.First(o => o.AttributeType == attributeType.GetType())?.LogType;
-            
-            if(logType==null)
+            if (logType==null)
             {
                 await next(context);
                 return;

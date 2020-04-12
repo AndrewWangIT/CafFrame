@@ -55,9 +55,9 @@ namespace Capgemini.Frame.AspNetCore
                 if (!string.IsNullOrEmpty(corsOption.ConfigurationSection))
                 {
                     var corsFromAppsettings = context.Configuration["App:CorsOrigins"]
-                                        .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                                        ?.Split(",", StringSplitOptions.RemoveEmptyEntries)
                                         .Select(o => o.RemovePostFix("/"))
-                                        .ToArray();
+                                        .ToArray() ?? new string[] { } ;
                     corsOption.Origins.AddRange(corsFromAppsettings);
                 }
                 context.Services.AddCors(

@@ -7,9 +7,9 @@ namespace CafApi.DynamicServices
     [DynamicWebApi]
     public class TestAppService:IDynamicWebApiService
     {
-        public IActionResult Get(int id)
+        public string Get(int id)
         {
-            return new  JsonResult("Test");
+            return "";
         }
         
     }

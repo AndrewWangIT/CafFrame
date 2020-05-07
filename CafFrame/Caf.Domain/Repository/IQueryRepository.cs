@@ -19,7 +19,5 @@ namespace Caf.Domain.Repository
         IQueryable<TEntity> QueryPagedList<TR>(int offset, int limit, Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, TR>> orderby, bool isAsc, out int total);
         IQueryable<TEntity> QueryPagedList(int offset, int limit, Expression<Func<TEntity, bool>> where, List<Expression<Func<TEntity, object>>> orderbys, List<bool> isAscs, out int total);
         IQueryable<TEntity> QueryPagedList<TR>(int offset, int limit, IQueryable<TEntity> queryable, Expression<Func<TEntity, TR>> orderby, bool isAsc, out int total);
-
-
     }
 }

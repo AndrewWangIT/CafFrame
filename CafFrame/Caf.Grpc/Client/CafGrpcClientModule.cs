@@ -43,20 +43,11 @@ namespace Caf.Grpc.Client
         }
         public override void OnApplicationInitialization(CafApplicationContext context)
         {
-            //var utility = context.ServiceProvider.GetRequiredService<IGrpcConnectionUtility>();
-            //var generator = context.ServiceProvider.GetRequiredService<IGrpcServiceGenerator>();         
-            //var types = generator.GeneraterClientProxyInterface();
-            //utility.TypeMapping = new Dictionary<Type, Type>();  
-            //foreach (var item in types)
-            //{
-            //    utility.TypeMapping.Add(item.Item2, item.Item1);
-            //}
+
         }
         public override void OnApplicationShutdown(CafApplicationContext context)
         {
-
             var grpcConfig = context.ServiceProvider.GetRequiredService<IGrpcClientConfiguration>();
-
 
             foreach (var serverNodes in grpcConfig.GrpcDirectConnectionConfiguration.GrpcServerNodes)
             {

@@ -16,9 +16,6 @@ namespace Caf.Grpc.Server
     {
         public override void BeforeConfigureServices(CafConfigurationContext context)
         {
-            //context.Services.AddSingleton<IGrpcServerConfiguration>(new GrpcServerConfiguration());
-            //context.Services.AddSingleton(typeof(IGrpcServiceProvider), typeof(GrpcServiceProvider));
-            //context.Services.AddSingleton(typeof(IGrpcServiceGenerator), typeof(GrpcServiceGenerator));
             if (context.Services.GetSingletonInstanceOrNull<IGrpcServerConfiguration>() == null)
             {
                 var grpcServerConfiguration = new GrpcServerConfiguration();

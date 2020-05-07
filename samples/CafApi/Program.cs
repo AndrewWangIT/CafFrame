@@ -21,7 +21,8 @@ namespace CafApi
             Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>()
+                    .UseUrls("http://loaclhost:44300");
                 }).UseServiceProviderFactory(new AspectCoreServiceProviderFactory());
     }
 }

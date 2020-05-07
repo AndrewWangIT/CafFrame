@@ -15,7 +15,6 @@ using Caf.Grpc.Client;
 using Capgemini.Frame.AspNetCore;
 using Caf.Grpc.Server.Extensions;
 using Caf.Grpc.Client.Extensions;
-using Caf.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 using Capgemini.Caf;
 using Microsoft.AspNetCore.Builder;
@@ -24,6 +23,7 @@ using CafApi.GrpcService;
 using Caf.Job;
 using Newtonsoft.Json.Serialization;
 using Microsoft.OpenApi.Models;
+using Caf.Core;
 
 namespace CafApi
 {
@@ -41,14 +41,15 @@ namespace CafApi
             context.Services.AddSingleton<ITestService, TestService>();
 
             context.AddCafCors(o => { o.ConfigurationSection = "App:CorsOrigins"; o.Enable = true; });//添加跨域
-            //context.Services.AddSingleton<ITestNewService, TestNewService>();
+
             context.UseGrpcService
                 (
                 o => {
                     o.GrpcBindAddress = "0.0.0.0";
                     o.GrpcBindPort = 8989;
                 }).AddRpcServiceAssembly(typeof(sampleModule).Assembly);
-            context.AddCafCors(o => { o.ConfigurationSection = "App:CorsOrigins"; o.Enable = true; });//添加跨域
+
+
             //添加JWT验证
             context.AddCafJWTAuth(o =>
             {
@@ -122,7 +123,7 @@ namespace CafApi
                 var xmlPath = Path.Combine(basePath,  "caf.WebApi.xml");
                 // var xmlPath1 = Path.Combine(basePath, "caf.Application.xml");
                 var xmlPath2 = Path.Combine(basePath, "caf.Core.xml");
-                options.IncludeXmlComments(xmlPath);
+                //options.IncludeXmlComments(xmlPath);
                 // options.IncludeXmlComments(xmlPath1);
                // options.IncludeXmlComments(xmlPath2);
             });

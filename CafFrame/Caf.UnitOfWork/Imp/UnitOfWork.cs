@@ -23,7 +23,6 @@ namespace Caf.UnitOfWork.Imp
                 throw ex;
             }
         }
-
         public void Dispose()
         {
             DisposeTransactions();

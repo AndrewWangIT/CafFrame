@@ -5,7 +5,7 @@ namespace Caf.DynamicWebApi
 {
     public class WebApiConsts
     {
-         public static string DefaultHttpVerb { get; set; }
+        public static string DefaultHttpVerb { get; set; }
 
         public static string DefaultAreaName { get; set; } 
  

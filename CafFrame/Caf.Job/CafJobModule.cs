@@ -2,11 +2,13 @@
 using Caf.Core.Module;
 using Host;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Quartz.Impl.AdoJobStore;
 using Quartz.Impl.AdoJobStore.Common;
+using System;
 
 namespace Caf.Job
 {
@@ -14,7 +16,7 @@ namespace Caf.Job
     {
         public override void ConfigureServices(CafConfigurationContext context)
         {
-            context.Services.AddSingleton(GetScheduler(context.Configuration));
+            context.Services.AddSingleton(GetScheduler(context));
         }
         public override void OnApplicationInitialization(CafApplicationContext context)
         {
@@ -41,10 +43,10 @@ namespace Caf.Job
                 FileProvider = manifestEmbeddedProvider
             });
         }
-        private SchedulerCenter GetScheduler(IConfiguration configuration)
+        private SchedulerCenter GetScheduler(CafConfigurationContext context)
         {
-            string dbProviderName = configuration.GetSection("Quartz")["dbProviderName"];
-            string connectionString = configuration.GetSection("Quartz")["connectionString"];
+            string dbProviderName = context.Configuration.GetSection("Quartz")["dbProviderName"];
+            string connectionString = context.Configuration.GetSection("Quartz")["connectionString"];
 
             string driverDelegateType = string.Empty;
 
@@ -67,11 +69,28 @@ namespace Caf.Job
                 default:
                     throw new System.Exception("dbProviderName unreasonable");
             }
-
+            JudgeConfigureConn(context);
+            var dbcontext = context.Services.BuildServiceProvider().GetService<CafJobDbContext>();
             SchedulerCenter schedulerCenter = SchedulerCenter.Instance;
-            schedulerCenter.Setting(new DbProvider(dbProviderName, connectionString), driverDelegateType);
+            schedulerCenter.Setting(new DbProvider(dbProviderName, connectionString), driverDelegateType, dbcontext);
 
             return schedulerCenter;
+        }
+
+        private void JudgeConfigureConn(CafConfigurationContext context)
+        {
+            //notice:使用方需要指定配置AppSettingsConnection
+            string conn = context.Configuration.GetSection("Quartz")["connectionString"];
+            try
+            {
+                //var dboptions = new DbContextOptionsBuilder<CafAppsettingDbContext>().UseSqlServer(conn); ;
+                //context.Services.AddScoped(s => new CafAppsettingDbContext(dboptions.Options));
+                context.Services.AddDbContext<CafJobDbContext>(options => options.UseSqlServer(conn));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using Caf.Job;
 using Caf.Job.Entity;
 using Caf.Job.Repositories;
 using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Quartz;
 using Quartz.Impl;
@@ -38,15 +40,17 @@ namespace Caf.Job
         IDbProvider dbProvider;
         string driverDelegateType;
 
+        CafJobDbContext dbContext;
         /// <summary>
         /// 配置Scheduler 仅初始化时生效
         /// </summary>
         /// <param name="dbProvider"></param>
         /// <param name="driverDelegateType"></param>
-        public void Setting(IDbProvider dbProvider, string driverDelegateType)
+        public void Setting(IDbProvider dbProvider, string driverDelegateType, CafJobDbContext dbContext)
         {
             this.driverDelegateType = driverDelegateType;
             this.dbProvider = dbProvider;
+            this.dbContext = dbContext;
         }
 
         private IScheduler _scheduler;
@@ -64,20 +68,30 @@ namespace Caf.Job
                     return _scheduler;
                 }
 
-                //如果不存在sqlite数据库，则创建
-                if (driverDelegateType.Equals(typeof(SQLiteDelegate).AssemblyQualifiedName)
-                    && !File.Exists("File/sqliteScheduler.db"))
-                {
-                    if (!Directory.Exists("File")) Directory.CreateDirectory("File");
+                ////如果不存在sqlite数据库，则创建
+                //if (driverDelegateType.Equals(typeof(SQLiteDelegate).AssemblyQualifiedName)
+                //    && !File.Exists("File/sqliteScheduler.db"))
+                //{
+                //    if (!Directory.Exists("File")) Directory.CreateDirectory("File");
 
-                    using (var connection = new SqliteConnection("Data Source=File/sqliteScheduler.db"))
-                    {
-                        connection.OpenAsync().Wait();
-                        string sql = File.ReadAllTextAsync("Tables/tables_sqlite.sql").Result;
-                        var command = new SqliteCommand(sql, connection);
-                        command.ExecuteNonQuery();
-                        connection.Close();
-                    }
+                //    using (var connection = new SqliteConnection("Data Source=File/sqliteScheduler.db"))
+                //    {
+                //        connection.OpenAsync().Wait();
+                //        string sql = File.ReadAllTextAsync("Tables/tables_sqlite.sql").Result;
+                //        var command = new SqliteCommand(sql, connection);
+                //        command.ExecuteNonQuery();
+                //        connection.Close();
+                //    }
+                //}
+
+                //支持sqlserver
+                var exist = TableExists("QRTZ_CALENDARS");
+                if (!exist)
+                {
+                    dynamic type = typeof(SchedulerCenter);
+                    string currentDirectory = Path.GetDirectoryName(type.Assembly.Location);
+                    string sql = File.ReadAllTextAsync($"{currentDirectory}/Tables/tables_sqlServer.sql").ConfigureAwait(false).GetAwaiter().GetResult();
+                    dbContext.Database.ExecuteSqlCommand(sql);
                 }
 
                 if (dbProvider == null || string.IsNullOrEmpty(driverDelegateType))
@@ -494,6 +508,28 @@ namespace Caf.Job
                    .ForJob(entity.JobName, entity.JobGroup)//作业名称
                    .Build();
         }
+
+        #region private
+        private bool TableExists(string tableName)
+        {
+            var connection = dbContext.Database.GetDbConnection();
+
+            if (connection.State.Equals(ConnectionState.Closed))
+                connection.Open();
+
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = @"select * from sysobjects where id = object_id(@tablename) and OBJECTPROPERTY(id, N'IsUserTable') = 1";
+
+                var tableNameParam = command.CreateParameter();
+                tableNameParam.ParameterName = "@tablename";
+                tableNameParam.Value = tableName;
+                command.Parameters.Add(tableNameParam);
+
+                return command.ExecuteScalar() != null;
+            }
+        }
+        #endregion
 
     }
 }

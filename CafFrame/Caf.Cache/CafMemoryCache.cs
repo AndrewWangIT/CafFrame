@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Caf.Cache
 {
-    public class CafMemoryCache : ICafCache, ISingleton
+    public class CafMemoryCache : ICafCache//, ISingleton
     {
         private readonly IMemoryCache _cache;
 

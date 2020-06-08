@@ -6,6 +6,10 @@ namespace Caf.Core.DataModel.Http
 {
     public class CafApiResponse: ResponseBase
     {
+        public CafApiResponse()
+        {
+            Message = "";
+        }
         public CafApiResponse(bool isSuccess=true,string message="")
         {
             IsSuccess = isSuccess;
@@ -19,6 +23,10 @@ namespace Caf.Core.DataModel.Http
     }
     public class CafApiResponse<T> : ResponseBase<T> where T : class
     {
+        public CafApiResponse()
+        {
+            Message = "";
+        }
         public CafApiResponse(T data, bool isSuccess = true, string message = "")
         {
             Data = data;

@@ -23,15 +23,19 @@ using CafApi.GrpcService;
 using Caf.Job;
 using Newtonsoft.Json.Serialization;
 using Microsoft.OpenApi.Models;
-using Caf.Core;
+using Caf.Kafka.Common;
+using MongodbTest;
+using Caf.Domain.IntegrationEvent;
+using Caf.Kafka;
 
 namespace CafApi
 {
-    [UsingModule(typeof(CafJobModule))]
-    [UsingModule(typeof(CafGrpcServerModule))]
+    //[UsingModule(typeof(CafJobModule))]
+    //[UsingModule(typeof(CafGrpcServerModule))]
     [UsingModule(typeof(CafAspNetCoreModule))]
-    [UsingModule(typeof(DynamicWebApiModule))]
-
+    //[UsingModule(typeof(DynamicWebApiModule))]
+    [UsingModule(typeof(MongodbTestMoudle))]
+    [UsingModule(typeof(CafKafkaModule))]
     public class sampleModule:CafModule
     {
       
@@ -42,12 +46,12 @@ namespace CafApi
 
             context.AddCafCors(o => { o.ConfigurationSection = "App:CorsOrigins"; o.Enable = true; });//添加跨域
 
-            context.UseGrpcService
-                (
-                o => {
-                    o.GrpcBindAddress = "0.0.0.0";
-                    o.GrpcBindPort = 8989;
-                }).AddRpcServiceAssembly(typeof(sampleModule).Assembly);
+            //context.UseGrpcService
+            //    (
+            //    o => {
+            //        o.GrpcBindAddress = "0.0.0.0";
+            //        o.GrpcBindPort = 8989;
+            //    }).AddRpcServiceAssembly(typeof(sampleModule).Assembly);
 
 
             //添加JWT验证
@@ -82,7 +86,13 @@ namespace CafApi
                 options.JsonSerializerOptions.PropertyNameCaseInsensitive = false;
             }).AddControllersAsServices().AddMvcLocalization();
 
-           context.Services.AddDynamicWebApi();
+           //context.Services.AddDynamicWebApi();
+
+            context.Services.AddIntegrationEventBus(x =>
+            {
+                x.UseKafka("49.234.12.187:9092");
+            });
+
             #region swagger
             context.Services.AddSwaggerGen(options =>
             { 

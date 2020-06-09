@@ -14,6 +14,8 @@
  <ProjectReference Include="..\..\CafFrame\Caf.DynamicWebApi\Caf.DynamicWebApi.csproj" />
  <ProjectReference Include="../../CafFrame/Caf.Grpc/Caf.Grpc.csproj" />
  <ProjectReference Include="..\..\CafFrame\Caf.Job\Caf.Job.csproj" />
+ <ProjectReference Include="..\..\CafFrame\Caf.KafKa\Caf.Kafka.csproj" />
+ <ProjectReference Include="..\..\CafFrame\MongodbTest\MongodbTest.csproj" />
  </ItemGroup>
   <ItemGroup>
    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.2.0" />

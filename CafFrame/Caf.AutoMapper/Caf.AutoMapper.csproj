@@ -6,7 +6,10 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
-    <PackageReference Include="Caf.Core" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Caf.Core\Caf.Core.csproj" />
   </ItemGroup>
 
 </Project>

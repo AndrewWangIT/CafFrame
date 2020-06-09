@@ -6,6 +6,7 @@
     <OutputType>Library</OutputType>
     <StartupObject />
     <IsPackable>true</IsPackable>
+    <Version>1.0.1</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />

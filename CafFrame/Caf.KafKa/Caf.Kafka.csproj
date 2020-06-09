@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Common\BrokerAddress.cs" />
+    <Compile Remove="Common\Headers.cs" />
+    <Compile Remove="Common\TransportMessage.cs" />
+    <Compile Remove="Consumer\IConsumerClient.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Confluent.Kafka" Version="1.4.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Caf.Domain\Caf.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

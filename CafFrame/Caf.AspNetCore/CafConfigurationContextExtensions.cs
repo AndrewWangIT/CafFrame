@@ -1,6 +1,7 @@
 ﻿using Caf.AspNetCore.Caf.Cors;
 using Caf.Core.JWT;
 using Caf.Core.Module;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -26,6 +27,56 @@ namespace Caf.AspNetCore
                 options.DefaultAuthenticateScheme = "CafJWTBearer";
                 options.DefaultChallengeScheme = "CafJWTBearer";
             }).AddJwtBearer("CafJWTBearer", options =>
+            {
+                options.Audience = jWTAuthConfiguration.Audience;
+
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    // The signing key must match!
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = jWTAuthConfiguration.SymmetricSecurityKey,
+
+                    // Validate the JWT Issuer (iss) claim
+                    ValidateIssuer = true,
+                    ValidIssuer = jWTAuthConfiguration.Issuer,
+
+                    // Validate the JWT Audience (aud) claim
+                    ValidateAudience = true,
+                    ValidAudience = jWTAuthConfiguration.Audience,
+
+                    // Validate the token expiry
+                    ValidateLifetime = true,
+
+                    // If you want to allow a certain amount of clock drift, set that here
+                    ClockSkew = TimeSpan.Zero
+                };
+
+                if (onMessageReceived != null)
+                {
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = onMessageReceived
+                    };
+                }
+
+            });
+        }
+
+        public static AuthenticationBuilder AddCafJWTAuth(this CafConfigurationContext context, Action<CafJwtAuthConfiguration> action, string authenticationScheme, string defaultAuthenticateScheme = "", string defaultChallengeScheme = "", Func<MessageReceivedContext, Task> onMessageReceived = null)
+        {
+            CafJwtAuthConfiguration jWTAuthConfiguration = new CafJwtAuthConfiguration();
+            action.Invoke(jWTAuthConfiguration);
+            context.Services.AddSingleton(jWTAuthConfiguration);
+            return context.Services.AddAuthentication(options => {
+                if (!string.IsNullOrEmpty(defaultAuthenticateScheme))
+                {
+                    options.DefaultAuthenticateScheme = defaultAuthenticateScheme;
+                }
+                if (!string.IsNullOrEmpty(defaultChallengeScheme))
+                {
+                    options.DefaultChallengeScheme = defaultChallengeScheme;
+                }
+            }).AddJwtBearer(authenticationScheme, options =>
             {
                 options.Audience = jWTAuthConfiguration.Audience;
 

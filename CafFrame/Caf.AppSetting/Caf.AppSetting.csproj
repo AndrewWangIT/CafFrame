@@ -26,6 +26,14 @@
     <EmbeddedResource Include="UI\**\*" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Tables\table_appsettingbycafs.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Tables\table_appsettingbycafs.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Caf.Cache\Caf.Cache.csproj" />
   </ItemGroup>
 
@@ -36,10 +44,5 @@
     <EmbeddedResource Update="UI\index.html">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Tables\table_appsettingbycafs.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>

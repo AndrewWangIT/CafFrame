@@ -1,6 +1,8 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -20,19 +22,31 @@ namespace BenchmarkTest
             //    Console.WriteLine(m.Value.Substring(0,m.Value.Length-1).Replace("(别名:", ""));
             //}
 
-            for (int i = 0; i < 1000; i++)
+            //var xxxxxx = new xxx();
+            var list1 = new List<string>();
+            var list2 = new List<string>();
+            for (int i = 0; i < 800000; i++)
             {
-                Func<string, Task> workItem = async x => { var a = 1; };
-                await workItem("ss");
+                var item1 = Guid.NewGuid().ToString();
+                list1.Add(item1);
+                if (i%2==0)
+                {
+                    list2.Add(item1);
+                }
+                else
+                {
+                    list2.Add(Guid.NewGuid().ToString());
+                }
             }
+            var reslut = list1.Intersect(list2);
 
             Console.ReadKey();
         }
     }
-    public class xx
+    public class xxqq
     {
         HttpClient httpClient;
-        public xx()
+        public xxqq()
         {
             httpClient = new HttpClient();
            
@@ -51,5 +65,17 @@ namespace BenchmarkTest
             a.EnsureSuccessStatusCode();
         }
 
+    }
+    public class xx
+    {
+        public xx()
+        {
+            var a = this.GetType();
+        }
+        public string aa { get; set; }
+    }
+    public class xxx : xx
+    {
+        public string bb { get; set; }
     }
 }

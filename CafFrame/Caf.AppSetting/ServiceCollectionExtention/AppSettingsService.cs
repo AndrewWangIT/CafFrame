@@ -128,7 +128,12 @@ namespace Caf.AppSetting.ServiceCollectionExtention
         {
             ResponseBase ret = new ResponseBase();
             var entity = _dbContext.AppSettingByCafs.FirstOrDefault(p => p.Key == model.Key);
-            
+            if (model.Id==0 && entity!=null)
+            {
+                ret.IsSuccess = false;
+                ret.Message = "新增key重复！";
+                return ret;
+            }
             if (entity != null)
             {
                 entity.LatestModifiedTime = DateTime.Now;

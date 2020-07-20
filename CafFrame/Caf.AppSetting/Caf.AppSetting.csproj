@@ -8,9 +8,11 @@
     <OutputType>Library</OutputType>
     <IsPackable>true</IsPackable>
     <StartupObject />
-    <Version>1.0.10</Version>
-    <AssemblyVersion>1.0.10.0</AssemblyVersion>
-    <FileVersion>1.0.10.0</FileVersion>
+    <Version>1.0.4</Version>
+    <AssemblyVersion>1.0.4.0</AssemblyVersion>
+    <FileVersion>1.0.4.0</FileVersion>
+    <!--<AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>-->
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,19 +24,16 @@
   <ItemGroup>
     <EmbeddedResource Include="UI\**\*" />
   </ItemGroup>
+  <!--<ItemGroup>
+    <None Remove="Tables\table_appsettingbycafs.sql" />
+  </ItemGroup>-->
   <ItemGroup>
-    <Compile Remove="Model\**" />
-    <Content Remove="Model\**" />
-    <EmbeddedResource Remove="Model\**" />
-    <None Remove="Model\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="ServiceCollectionExtention\IAppSettingsService.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Tables\table_appsettingbycafs.sql">
+    <!--<Content Include="Tables\table_appsettingbycafs.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Content>-->
+    <EmbeddedResource Include="Tables\table_appsettingbycafs.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Caf.Cache\Caf.Cache.csproj" />

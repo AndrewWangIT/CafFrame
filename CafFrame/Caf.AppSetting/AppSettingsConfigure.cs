@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Caf.AppSetting
@@ -31,11 +32,19 @@ namespace Caf.AppSetting
             if (!exist)
             {
                 dynamic type = typeof(AppSettingsConfigure);
-                string currentDirectory = Path.GetDirectoryName(type.Assembly.Location);
-                //C:\InstallingSoftware\SourceCodes\CapResources\CafFrame\CafFrame\Caf.AppSetting\Tables\table_appsettingbycafs.sql
-                string sql = File.ReadAllTextAsync($"{currentDirectory}/Tables/table_appsettingbycafs.sql").ConfigureAwait(false).GetAwaiter().GetResult();
-                //var result = _dbContext.AppSettingByCafs.FromSql(sql);
-                _dbContext.Database.ExecuteSqlCommand(sql);
+                //string currentDirectory = Path.GetDirectoryName(type.Assembly.Location);
+                ////C:\InstallingSoftware\SourceCodes\CapResources\CafFrame\CafFrame\Caf.AppSetting\Tables\table_appsettingbycafs.sql
+                //string sql = File.ReadAllTextAsync($"{currentDirectory}/Tables/table_appsettingbycafs.sql").ConfigureAwait(false).GetAwaiter().GetResult();
+                ////var result = _dbContext.AppSettingByCafs.FromSql(sql);
+
+                var _name = "Caf.AppSetting.Tables.table_appsettingbycafs.sql";
+                var stream = type.Assembly.GetManifestResourceStream(_name);
+                var buffer = new byte[stream.Length];
+                stream.Read(buffer, 0, buffer.Length);
+                string sqlInFile = Encoding.Default.GetString(buffer).Substring(1);
+                //var i = sqlInFile.IndexOf('I');
+                //var stringbuilder = new StringBuilder(sqlInFile);
+                _dbContext.Database.ExecuteSqlCommand(sqlInFile);
             }
         }
 

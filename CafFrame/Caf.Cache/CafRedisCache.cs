@@ -21,14 +21,17 @@ namespace Caf.Cache
 
         protected virtual string FormatKey(string key)
         {
-            return "OPCache:" + key;
+            return key;
         }
 
         static CSRedisClient GetClient()
         {
             return redisManger;
         }
-
+        public bool Exists(string key)
+        {
+            return GetClient().Exists(key);
+        }
         public void Clear()
         {
             GetClient().Del("*");

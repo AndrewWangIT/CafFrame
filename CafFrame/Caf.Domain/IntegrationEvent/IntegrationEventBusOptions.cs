@@ -11,6 +11,7 @@ namespace Caf.Domain.IntegrationEvent
         {
             Extensions = new List<IOptionsExtension>();
         }
+        public Type IConsumerErrHandler { get; set; }
         internal IList<IOptionsExtension> Extensions { get; }
         public void RegisterExtension(IOptionsExtension extension)
         {

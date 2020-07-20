@@ -7,35 +7,36 @@ using System.Text;
 
 namespace Caf.MongoDB.MongoDB
 {
-    public class MongoDbContextProvider<TMongoDbContext> : IMongoDbContextProvider<TMongoDbContext>
-        where TMongoDbContext : ICafMongoDbContext
+    public class MongoDbContextProvider<EntityType> : IMongoDbContextProvider<EntityType> where EntityType : class
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IUowHelper _uowHelper;
-        public MongoDbContextProvider(IServiceProvider serviceProvider, IUowHelper uowHelper)
+        private readonly Type dbContextType;
+        public MongoDbContextProvider(IServiceProvider serviceProvider, IUowHelper uowHelper, IMongoContextEntityMapping  mongoContextEntityMapping)
         {
             _uowHelper = uowHelper;
             _serviceProvider = serviceProvider;
+            dbContextType = mongoContextEntityMapping.GetDbContextByEntity<EntityType>();
         }
-        public TMongoDbContext GetDbContext()
+        public ICafMongoDbContext GetDbContext()
         {
             //是否存在工作单元
             if (_uowHelper.IsExistUow)
             {
-                var key = typeof(TMongoDbContext).FullName;
+                var key = dbContextType.FullName;
                 if (_uowHelper.IsExistConnectionKey(key))
                 {
-                    var efuowConnection = (MongoDbUOWConnection)_uowHelper.GetOrAddUOWConnection(key, null);
-                    return (TMongoDbContext)efuowConnection.DbContext;
+                    var mongouowConnection = (MongoDbUOWConnection)_uowHelper.GetOrAddUOWConnection(key, null);
+                    return (ICafMongoDbContext)mongouowConnection.DbContext;
                 }
-                var dbcontext = (ICafMongoDbContext)_serviceProvider.GetRequiredService(typeof(TMongoDbContext));
+                var dbcontext = (ICafMongoDbContext)_serviceProvider.GetRequiredService(dbContextType);
                 var dbtransaction = dbcontext.mongoClient.StartSession();
                 _uowHelper.GetOrAddUOWConnection(key, new MongoDbUOWConnection { DbContext = dbcontext, ClientSession = dbtransaction });
-                return (TMongoDbContext)dbcontext;
+                return (ICafMongoDbContext)dbcontext;
             }
             else
             {
-                return (TMongoDbContext)_serviceProvider.GetRequiredService(typeof(TMongoDbContext));
+                return (ICafMongoDbContext)_serviceProvider.GetRequiredService(dbContextType);
             }
         }
     }

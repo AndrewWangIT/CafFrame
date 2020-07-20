@@ -14,29 +14,29 @@ using System.Threading.Tasks;
 
 namespace Caf.MongoDB.Repository
 {
-    public class MongoDbRepository<TMongoDbContext, TEntity>
-    : MongoDbRepository<TMongoDbContext, TEntity, ObjectId>,IMongoDbRepository<TMongoDbContext, TEntity>
-    where TMongoDbContext : CafMongoDbContext
+    public class MongoDbRepository<TEntity>
+    : MongoDbRepository< TEntity, ObjectId>,IMongoDbRepository<TEntity>
     where TEntity : class, IEntity<ObjectId>
     {
-        public MongoDbRepository(IMongoDbContextProvider<TMongoDbContext> mongoDbContextProvider):base(mongoDbContextProvider)
+        public MongoDbRepository(IMongoDbContextProvider<TEntity> mongoDbContextProvider):base(mongoDbContextProvider)
         {
 
         }
     }
 
-    public class MongoDbRepository<TMongoDbContext, TEntity, TKey>
-    : IMongoDbRepository<TMongoDbContext, TEntity, TKey>
-    where TMongoDbContext : CafMongoDbContext
+    public class MongoDbRepository<TEntity, TKey>
+    : IMongoDbRepository<TEntity, TKey>
     where TEntity : class, IEntity<TKey>
     {
         public bool IgnoreGlobalFilter { get; set; }
-        public virtual TMongoDbContext DbContext => DbContextProvider.GetDbContext();
-        protected IMongoDbContextProvider<TMongoDbContext> DbContextProvider { get; }
+        public virtual ICafMongoDbContext DbContext => DbContextProvider.GetDbContext();
+        protected IMongoDbContextProvider<TEntity> DbContextProvider { get; }
         public IMongoDatabase Database => DbContext.Database;
         public virtual IMongoCollection<TEntity> Collection => DbContext.Collection<TEntity>();
 
-        public MongoDbRepository(IMongoDbContextProvider<TMongoDbContext> mongoDbContextProvider)
+        public string CollectionName => DbContext.GetCollectionName<TEntity>();
+
+        public MongoDbRepository(IMongoDbContextProvider<TEntity> mongoDbContextProvider)
         {
             DbContextProvider = mongoDbContextProvider;
         }
@@ -172,6 +172,30 @@ namespace Caf.MongoDB.Repository
             return entity;
         }
 
+        public TEntity Update(TEntity entity, bool autoSave = false)
+        {
+            AutoSettingFieldForUpdate(entity);
+            var result = Collection.ReplaceOne(
+                CreateEntityFilter(entity.Id, false),
+                entity
+            );
+            return entity;
+        }
+
+        public async Task<TEntity> UpdateAsync(
+            TEntity entity,
+            bool autoSave = false,
+            CancellationToken cancellationToken = default)
+        {
+            AutoSettingFieldForUpdate(entity);
+
+            var result = await Collection.ReplaceOneAsync(
+                CreateEntityFilter(entity.Id, false),
+                entity
+            );
+            return entity;
+        }
+
         protected virtual FilterDefinition<TEntity> CreateEntityFilter(TKey id, bool applyFilters = false)
         {
             var filters = new List<FilterDefinition<TEntity>>
@@ -225,11 +249,27 @@ namespace Caf.MongoDB.Repository
                 }
             }
         }
+        private void AutoSettingFieldForUpdate(TEntity entity)
+        {
+            if (entity is IHasLastModificationTime)
+            {
+                ((IHasLastModificationTime)entity).LastModificationTime = DateTime.Now;
+            }
+            //存在反射性能问题，后期优化
+            var entityType = entity.GetType();
+            if (entityType.GetInterfaces().Any(o => o.IsGenericType && (o.GetGenericTypeDefinition() == typeof(IHasLastModifier<>) || o.GetGenericTypeDefinition() == typeof(IHasLastModifierWithReferenceTypeKey<>))))
+            {
+                if (entityType.GetProperties().First(o => o.Name == "LastModifierId").GetReflector().GetValue(entity) == null)
+                {
+                    entityType.GetProperties().First(o => o.Name == "LastModifierId").SetValue(entity, DbContext.CurrentCreatorId);
+                }
+            }
+        }
     }
 
     public static class MongoDbRepositoryExt
     {
-        public static MongoDbRepository<TMongoDbContext, TEntity, TKey> IgnoreGlobalFilter<TMongoDbContext, TEntity, TKey>(this MongoDbRepository<TMongoDbContext, TEntity, TKey> repository) where TMongoDbContext : CafMongoDbContext
+        public static MongoDbRepository<TEntity, TKey> IgnoreGlobalFilter<TEntity, TKey>(this MongoDbRepository<TEntity, TKey> repository)
         where TEntity : class, IEntity<TKey>
         {
             repository.IgnoreGlobalFilter = true;

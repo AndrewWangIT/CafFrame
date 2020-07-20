@@ -14,7 +14,7 @@ using MagicOnion.Server;
 using System.Runtime.Loader;
 using Caf.Grpc.Client.Utility;
 
-namespace Capgemini.Frame.Grpc.Server.DynamicGenerator
+namespace Cafgemini.Frame.Grpc.Server.DynamicGenerator
 {
     public class GrpcServiceGenerator : IGrpcServiceGenerator
     {
@@ -107,7 +107,7 @@ namespace Capgemini.Frame.Grpc.Server.DynamicGenerator
             references.Add(MetadataReference.CreateFromFile(typeof(IGrpcConnectionUtility).GetTypeInfo().Assembly.Location));
             references.Add(MetadataReference.CreateFromFile(interfaces.First().Item2.GetTypeInfo().Assembly.Location));
             references.Add(MetadataReference.CreateFromFile(Path.Combine(dynamicProxysPath, "ClientInterfaceProxys.dll")));
-            CSharpCompilation compilation = CSharpCompilation.Create("Capgemini.Caf.ClientClassProxys", syntaxTrees, references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+            CSharpCompilation compilation = CSharpCompilation.Create("Cafgemini.Caf.ClientClassProxys", syntaxTrees, references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
             using (var ms = new MemoryStream())
             {
                 EmitResult result = compilation.Emit(Path.Combine(dynamicProxysPath, "ClientClassProxys.dll"));
@@ -143,7 +143,7 @@ namespace Capgemini.Frame.Grpc.Server.DynamicGenerator
             references.Add(MetadataReference.CreateFromFile(typeof(ServiceBase<>).GetTypeInfo().Assembly.Location));
             references.Add(MetadataReference.CreateFromFile(interfaces.First().Item2.GetTypeInfo().Assembly.Location));
             references.Add(MetadataReference.CreateFromFile(Path.Combine(dynamicProxysPath, "InterfaceProxys.dll")));
-            CSharpCompilation compilation = CSharpCompilation.Create("Capgemini.Caf.ClassProxys", syntaxTrees, references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+            CSharpCompilation compilation = CSharpCompilation.Create("Cafgemini.Caf.ClassProxys", syntaxTrees, references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
             using (var ms = new MemoryStream())
             {
                 EmitResult result = compilation.Emit(Path.Combine(dynamicProxysPath, "ClassProxys.dll"));
@@ -211,7 +211,7 @@ namespace Capgemini.Frame.Grpc.Server.DynamicGenerator
                         NamespaceDeclaration(
                             QualifiedName(
                                 QualifiedName(
-                                    IdentifierName("Capgemini"),
+                                    IdentifierName("Cafgemini"),
                                     IdentifierName("Caf")),
                                 IdentifierName("GrpcClientProxys")))
                 .WithMembers(
@@ -247,7 +247,7 @@ namespace Capgemini.Frame.Grpc.Server.DynamicGenerator
                         NamespaceDeclaration(
                             QualifiedName(
                                 QualifiedName(
-                                    IdentifierName("Capgemini"),
+                                    IdentifierName("Cafgemini"),
                                     IdentifierName("Caf")),
                                 IdentifierName("GrpcProxys")))
                 .WithMembers(
@@ -611,7 +611,7 @@ namespace Capgemini.Frame.Grpc.Server.DynamicGenerator
                         NamespaceDeclaration(
                             QualifiedName(
                                 QualifiedName(
-                                    IdentifierName("Capgemini"),
+                                    IdentifierName("Cafgemini"),
                                     IdentifierName("Caf")),
                                 IdentifierName(nameSpace)))
                 .WithMembers(

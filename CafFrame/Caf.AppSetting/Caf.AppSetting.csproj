@@ -8,17 +8,14 @@
     <OutputType>Library</OutputType>
     <IsPackable>true</IsPackable>
     <StartupObject />
-    <Version>1.0.0</Version>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
-    <!--<AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>-->
+    <Version>1.0.10</Version>
+    <AssemblyVersion>1.0.10.0</AssemblyVersion>
+    <FileVersion>1.0.10.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.5.0" />
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="3.1.4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
   </ItemGroup>
@@ -26,7 +23,13 @@
     <EmbeddedResource Include="UI\**\*" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Tables\table_appsettingbycafs.sql" />
+    <Compile Remove="Model\**" />
+    <Content Remove="Model\**" />
+    <EmbeddedResource Remove="Model\**" />
+    <None Remove="Model\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="ServiceCollectionExtention\IAppSettingsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Tables\table_appsettingbycafs.sql">

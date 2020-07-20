@@ -34,7 +34,11 @@ namespace Caf.Domain.IntegrationEvent
         /// Reject message and resumption
         /// </summary>
         void Reject(object sender);
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        string CurrentGroupId { get; }
         event EventHandler<TransportMessage> OnMessageReceived;
 
         event EventHandler<LogMessageEventArgs> OnLog;

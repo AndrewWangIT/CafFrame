@@ -1,5 +1,6 @@
 ﻿using Caf.Job.Entity;
 using Host.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
@@ -12,6 +13,7 @@ namespace Caf.Job.Controllers
     /// 设置
     /// </summary>
     [Route("api/[controller]/[Action]")]
+    [Authorize]
     //[EnableCors("AllowSameDomain")] //允许跨域 
     public class SetingController : Controller
     {

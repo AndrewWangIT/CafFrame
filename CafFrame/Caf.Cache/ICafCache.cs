@@ -11,5 +11,7 @@ namespace Caf.Cache
         void Remove(string key);
         void Clear();
         string Get(string key);
+
+        bool Exists(string key);
     }
 }

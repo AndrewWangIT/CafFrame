@@ -1,17 +1,14 @@
 ﻿using Caf.AppSetting.DbContextService;
 using Caf.AppSetting.ServiceCollectionExtention;
 using Caf.Cache;
+using Caf.Core.AppSetting;
 using Caf.Core.DependencyInjection;
 using Caf.Core.Module;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Caf.AppSetting
 {
@@ -22,7 +19,7 @@ namespace Caf.AppSetting
         {
             JudgeConfigureConn(context);
             context.Services.AddSingleton(typeof(AppSettingsConfigure));
-            context.Services.AddTransient<IAppSettingsService, AppSettingsService>();
+            context.Services.AddSingleton<IAppSettingsService, AppSettingsService>();
         }
         public override void OnApplicationInitialization(CafApplicationContext context)
         {
@@ -57,8 +54,6 @@ namespace Caf.AppSetting
             string conn = context.Configuration.GetSection("ConnectionStrings")["AppSettingsConnection"];
             try
             {
-                //var dboptions = new DbContextOptionsBuilder<CafAppsettingDbContext>().UseSqlServer(conn); ;
-                //context.Services.AddScoped(s => new CafAppsettingDbContext(dboptions.Options));
                 context.Services.AddDbContext<CafAppsettingDbContext>(options => options.UseSqlServer(conn));
             }
             catch (Exception ex)

@@ -5,7 +5,7 @@ using Caf.Core;
 using Caf.AspNetCore.ExceptionHandler;
 using Microsoft.AspNetCore.Http;
 
-namespace Capgemini.Caf
+namespace Cafgemini.Caf
 {
     public static class CafApplicationBuilderExtensions
     {

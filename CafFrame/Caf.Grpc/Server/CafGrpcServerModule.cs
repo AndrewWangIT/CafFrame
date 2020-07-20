@@ -4,7 +4,7 @@ using Caf.Core.Module;
 using Caf.Grpc.Client.Configuration;
 using Caf.Grpc.Server.Configuration;
 using Caf.Grpc.Server.HostService;
-using Capgemini.Frame.Grpc.Server.DynamicGenerator;
+using Cafgemini.Frame.Grpc.Server.DynamicGenerator;
 using Grpc.Core;
 using MagicOnion.Hosting;
 using MagicOnion.Server;

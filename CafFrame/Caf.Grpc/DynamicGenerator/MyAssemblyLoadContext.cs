@@ -1,7 +1,7 @@
 using System.Reflection;
 using System.Runtime.Loader;
 
-namespace Capgemini.Frame.Grpc.Server.DynamicGenerator
+namespace Cafgemini.Frame.Grpc.Server.DynamicGenerator
 {
     public class MyAssemblyLoadContext : AssemblyLoadContext
     {

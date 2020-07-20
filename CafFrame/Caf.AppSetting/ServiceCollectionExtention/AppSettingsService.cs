@@ -1,6 +1,6 @@
 ﻿using Caf.AppSetting.DbContextService;
-using Caf.AppSetting.Model;
 using Caf.Cache;
+using Caf.Core.AppSetting;
 using Caf.Core.DataModel.Http;
 using Caf.Core.Utils.Ext;
 using Microsoft.EntityFrameworkCore;
@@ -54,7 +54,7 @@ namespace Caf.AppSetting.ServiceCollectionExtention
             try
             {
                 var ret = _cafCache.Get<T>($"{Keys.CafCache}_{key}");
-                if (ret == null)
+                if (ret == null || !_cafCache.Exists($"{Keys.CafCache}_{key}"))
                 {
                     T value = default(T);
 
@@ -146,6 +146,7 @@ namespace Caf.AppSetting.ServiceCollectionExtention
             {
                 ret.IsSuccess = true;
                 _cafCache.Remove($"{Keys.CafCache}_{model.Key}");//清空缓存
+                //_cafCache.Put<string>($"{Keys.CafCache}_{model.Key}", model.Value, 3600);
             }
 
             return ret;

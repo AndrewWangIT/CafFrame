@@ -22,7 +22,7 @@ namespace Caf.MongoDB.MongoDB
                 typeof(MongoDbContextProvider<>)
             );
             context.Services.AddScoped(typeof(IMongoDbRepository<,>), typeof(MongoDbRepository<,>));
-            context.Services.AddScoped(typeof(IMongoDbRepository<,,>), typeof(MongoDbRepository<,,>));
+            context.Services.AddScoped(typeof(IMongoDbRepository<>), typeof(MongoDbRepository<>));
         }
     }
 }

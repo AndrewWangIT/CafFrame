@@ -1,5 +1,5 @@
 using System;
-namespace Capgemini.Frame.Grpc.Server.DynamicGenerator
+namespace Cafgemini.Frame.Grpc.Server.DynamicGenerator
 {
     public interface IGrpcServiceProvider
     {

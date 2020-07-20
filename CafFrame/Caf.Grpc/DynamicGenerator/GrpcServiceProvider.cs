@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Capgemini.Frame.Grpc.Server.DynamicGenerator
+namespace Cafgemini.Frame.Grpc.Server.DynamicGenerator
 {
     public class GrpcServiceProvider : IGrpcServiceProvider
     {

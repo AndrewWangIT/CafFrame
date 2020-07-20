@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Capgemini.Frame.Core.Caf.Core.Utils
+namespace Cafgemini.Frame.Core.Caf.Core.Utils
 {
     public static class AsyncHelper
     {

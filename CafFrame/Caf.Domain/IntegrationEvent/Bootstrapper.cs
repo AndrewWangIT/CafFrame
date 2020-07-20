@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Caf.Domain.IntegrationEvent
 {
     /// <summary>
-    /// Default implement of <see cref="T:DotNetCore.CAP.Internal.IBootstrapper" />.
+    /// Default implement of <see cref="T:DotNetCore.Caf.Internal.IBootstrapper" />.
     /// </summary>
     internal class Bootstrapper : BackgroundService
     {
@@ -48,7 +48,7 @@ namespace Caf.Domain.IntegrationEvent
 
             await BootstrapCoreAsync();
 
-            _logger.LogInformation("### CAP started!");
+            _logger.LogInformation("### Caf started!");
         }
 
         protected virtual Task BootstrapCoreAsync()

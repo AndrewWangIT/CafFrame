@@ -28,6 +28,7 @@ namespace Caf.Cache
             }
             else
             {
+                context.Services.AddMemoryCache();
                 context.Services.AddDistributedMemoryCache()
                     .AddSingleton<ICafCache, CafMemoryCache>();
             }

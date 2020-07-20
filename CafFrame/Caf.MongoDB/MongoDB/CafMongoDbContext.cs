@@ -43,7 +43,7 @@ namespace Caf.MongoDB.MongoDB
         {
             return Database.GetCollection<T>(GetCollectionName<T>());
         }
-        protected virtual string GetCollectionName<T>()
+        public virtual string GetCollectionName<T>()
         {
             return GetEntityModel<T>().CollectionName;
         }

@@ -2,7 +2,7 @@ using System.Reflection;
 using System;
 using System.Collections.Generic;
 
-namespace Capgemini.Frame.Grpc.Server.DynamicGenerator
+namespace Cafgemini.Frame.Grpc.Server.DynamicGenerator
 {
     public interface IGrpcServiceGenerator
     {

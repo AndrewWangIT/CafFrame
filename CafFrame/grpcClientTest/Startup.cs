@@ -1,6 +1,6 @@
 using AspectCore.Injector;
 using Caf.Core.DependencyInjection;
-using Capgemini.Caf;
+using Cafgemini.Caf;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

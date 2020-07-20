@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Caf.Core.DataModel.Http;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using Caf.AppSetting.Model;
-using Caf.Core.DataModel.Http;
 
-namespace Caf.AppSetting.ServiceCollectionExtention
+namespace Caf.Core.AppSetting
 {
     public interface IAppSettingsService
     {

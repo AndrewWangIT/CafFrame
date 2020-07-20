@@ -30,18 +30,18 @@ namespace Caf.Kafka.Common
     public static class KafkaOptionsExtensions
     {
         /// <summary>
-        /// Configuration to use kafka in CAP.
+        /// Configuration to use kafka in Caf.
         /// </summary>
-        /// <param name="options">CAP configuration options</param>
+        /// <param name="options">Caf configuration options</param>
         /// <param name="bootstrapServers">Kafka bootstrap server urls.</param>
         public static IntegrationEventBusOptions UseKafka(this IntegrationEventBusOptions options, string bootstrapServers)
         {
             return options.UseKafka(opt => { opt.Servers = bootstrapServers; });
         }
         /// <summary>
-        /// Configuration to use kafka in CAP.
+        /// Configuration to use kafka in Caf.
         /// </summary>
-        /// <param name="options">CAP configuration options</param>
+        /// <param name="options">Caf configuration options</param>
         /// <param name="configure">Provides programmatic configuration for the kafka .</param>
         /// <returns></returns>
         public static IntegrationEventBusOptions UseKafka(this IntegrationEventBusOptions options, Action<KafkaOptions> configure)

@@ -84,7 +84,7 @@ namespace Caf.Kafka.Producer
     }
 
     /// <summary>
-    /// Encapsulates an error from the operate subsystem.
+    /// EnCafsulates an error from the operate subsystem.
     /// </summary>
     public class OperateError
     {

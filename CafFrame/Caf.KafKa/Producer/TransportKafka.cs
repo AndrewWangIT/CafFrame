@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Caf.Kafka.Producer
@@ -37,13 +38,13 @@ namespace Caf.Kafka.Producer
                         ? new Header(header.Key, Encoding.UTF8.GetBytes(header.Value))
                         : new Header(header.Key, null));
                 }
-
+                CancellationToken a = new CancellationToken();
                 var result = await producer.ProduceAsync(message.GetTopic(), new Message<string, byte[]>
                 {
                     Headers = headers,
                     Key = message.Headers.TryGetValue(KafkaHeaders.KafkaKey, out string kafkaMessageKey) && !string.IsNullOrEmpty(kafkaMessageKey) ? kafkaMessageKey : message.GetId(),
                     Value = message.Body
-                });
+                },a );
 
                 if (result.Status == PersistenceStatus.Persisted || result.Status == PersistenceStatus.PossiblyPersisted)
                 {

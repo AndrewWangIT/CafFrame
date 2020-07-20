@@ -1,4 +1,4 @@
-﻿using Caf.AppSetting.Model;
+﻿using Caf.Core.AppSetting;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

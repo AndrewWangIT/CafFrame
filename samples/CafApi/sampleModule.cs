@@ -12,11 +12,11 @@ using Caf.Grpc;
 using Caf.Grpc.Client.Configuration;
 using Caf.Grpc.Server;
 using Caf.Grpc.Client;
-using Capgemini.Frame.AspNetCore;
+using Cafgemini.Frame.AspNetCore;
 using Caf.Grpc.Server.Extensions;
 using Caf.Grpc.Client.Extensions;
 using Microsoft.Extensions.DependencyInjection;
-using Capgemini.Caf;
+using Cafgemini.Caf;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 using CafApi.GrpcService;
@@ -27,10 +27,13 @@ using Caf.Kafka.Common;
 using MongodbTest;
 using Caf.Domain.IntegrationEvent;
 using Caf.Kafka;
+using Caf.AppSetting;
+using Caf.Core.AppSetting;
 
 namespace CafApi
 {
     //[UsingModule(typeof(CafJobModule))]
+    [UsingModule(typeof(CafAppSettingModule))]
     //[UsingModule(typeof(CafGrpcServerModule))]
     [UsingModule(typeof(CafAspNetCoreModule))]
     //[UsingModule(typeof(DynamicWebApiModule))]
@@ -65,6 +68,16 @@ namespace CafApi
         }
         public override void ConfigureServices(CafConfigurationContext context)
         {
+            context.Services.AddOptions<AccountOptions>()
+    .Configure<IAppSettingsService>(
+    (o, s) =>
+    {
+        o.ResetPasswordCodeExpire = s.Get<int>("AccountOptions:ResetPasswordCodeExpire").Result;
+        o.LockTime = s.Get<int>("AccountOptions:LockTime").Result;
+        o.PasswordErrTimeRange = s.Get<int>("AccountOptions:PasswordErrTimeRange").Result;
+        o.MaxLoginErrCount = s.Get<int>("AccountOptions:MaxLoginErrCount").Result;
+        o.PasswordExpireDays = s.Get<int>("AccountOptions:PasswordExpireDays").Result;
+    });
             context.Services.AddControllers().AddJsonOptions(options =>
             {
                 //格式化日期时间格式

@@ -21,27 +21,31 @@ namespace Caf.Job
         public override void OnApplicationInitialization(CafApplicationContext context)
         {
             context.ServiceProvider.GetService<SchedulerCenter>()?.Init();//初始化Job
+            string useUI = context.ServiceProvider.GetService<IConfiguration>().GetSection("Quartz")["UseUI"];
             var app = context.ServiceProvider.GetRequiredService<ObjectWrapper<IApplicationBuilder>>().Value;
-            app.Use(async (context, next) =>
+            if(useUI=="true")
             {
-                if (context.Request.Path.Value.ToLower().StartsWith("/jobui"))
+                app.Use(async (context, next) =>
                 {
-                    context.Request.Path = "/index.html";
-                    await next();
-                }
-                else
-                {
-                    await next();
-                }
-                
-            });
+                    if (context.Request.Path.Value.ToLower().StartsWith("/jobui"))
+                    {
+                        context.Request.Path = "/index.html";
+                        await next();
+                    }
+                    else
+                    {
+                        await next();
+                    }
 
-            var manifestEmbeddedProvider =
-                new ManifestEmbeddedFileProvider(typeof(CafJobModule).Assembly, "UI");
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = manifestEmbeddedProvider
-            });
+                });
+
+                var manifestEmbeddedProvider =
+                    new ManifestEmbeddedFileProvider(typeof(CafJobModule).Assembly, "UI");
+                app.UseStaticFiles(new StaticFileOptions
+                {
+                    FileProvider = manifestEmbeddedProvider
+                });
+            }            
         }
         private SchedulerCenter GetScheduler(CafConfigurationContext context)
         {

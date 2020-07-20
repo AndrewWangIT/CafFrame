@@ -9,8 +9,10 @@
 
  <ItemGroup>
  <!-- <ProjectReference Include="../../CafFrame/Caf.Core/Caf.Core.csproj" /> -->
+ <ProjectReference Include="..\..\CafFrame\Caf.AppSetting\Caf.AppSetting.csproj" />
  <ProjectReference Include="..\..\CafFrame\Caf.AspNetCore\Caf.AspNetCore.csproj" />
  <ProjectReference Include="..\..\CafFrame\Caf.Core\Caf.Core.csproj" />
+ <ProjectReference Include="..\..\CafFrame\Caf.Domain\Caf.Domain.csproj" />
  <ProjectReference Include="..\..\CafFrame\Caf.DynamicWebApi\Caf.DynamicWebApi.csproj" />
  <ProjectReference Include="../../CafFrame/Caf.Grpc/Caf.Grpc.csproj" />
  <ProjectReference Include="..\..\CafFrame\Caf.Job\Caf.Job.csproj" />

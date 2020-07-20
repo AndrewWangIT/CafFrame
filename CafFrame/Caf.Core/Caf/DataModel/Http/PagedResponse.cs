@@ -6,7 +6,7 @@ namespace Caf.Core.DataModel.Http
 {
     public class PagedResponse<T> where T : class
     {
-        public bool IsSuccess { get; set; }
+        public bool IsSuccess { get; set; } = true;
         public string Message { get; set; }
         public List<T> Datas { get; set; }
         public int Total { get; set; }

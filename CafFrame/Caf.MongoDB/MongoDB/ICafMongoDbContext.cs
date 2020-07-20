@@ -12,5 +12,8 @@ namespace Caf.MongoDB.MongoDB
         IMongoCollection<T> Collection<T>();
 
         MongoClient mongoClient { get; }
+        string GetCollectionName<T>();
+
+        public object CurrentCreatorId { get; }
     }
 }

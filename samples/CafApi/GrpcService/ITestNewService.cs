@@ -1,6 +1,6 @@
 ﻿using Caf.Grpc.Client.Utility;
 using Caf.Grpc.DynamicGenerator;
-using Capgemini.Frame.Grpc.Server.DynamicGenerator;
+using Cafgemini.Frame.Grpc.Server.DynamicGenerator;
 using MagicOnion;
 using MagicOnion.Server;
 using MessagePack;

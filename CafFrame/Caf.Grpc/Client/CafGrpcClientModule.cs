@@ -2,7 +2,7 @@
 using Caf.Grpc.Client.Configuration;
 using Caf.Grpc.Client.Utility;
 using Caf.Grpc.Server.Configuration;
-using Capgemini.Frame.Grpc.Server.DynamicGenerator;
+using Cafgemini.Frame.Grpc.Server.DynamicGenerator;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

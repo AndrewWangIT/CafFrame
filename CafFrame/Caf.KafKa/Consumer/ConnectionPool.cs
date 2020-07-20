@@ -24,7 +24,7 @@ namespace Caf.Kafka.Consumer
             _producerPool = new ConcurrentQueue<IProducer<string, byte[]>>();
             _maxSize = _options.ConnectionPoolSize;
 
-            logger.LogDebug("CAP Kafka configuration: {0}", JsonConvert.SerializeObject(_options.AsKafkaConfig(), Formatting.Indented));
+            logger.LogDebug("Caf Kafka configuration: {0}", JsonConvert.SerializeObject(_options.AsKafkaConfig(), Formatting.Indented));
         }
 
         public string ServersAddress => _options.Servers;

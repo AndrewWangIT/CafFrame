@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Caf.Core.DataModel.Http
 {
-    public class ResponseBase<T> : ResponseBase where  T:class
+    public class ResponseBase<T> : ResponseBase
     {
         public T Data { get; set; }
     }

@@ -3,6 +3,7 @@ using Caf.Core;
 using Caf.Core.DataModel.Http;
 using Caf.Core.DependencyInjection;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,10 @@ namespace Caf.AspNetCore.ExceptionHandler
     public class ExceptionHandlerMiddleware : IMiddleware, ITransient
     {
         private readonly ILogger<ExceptionHandlerMiddleware> _logger;
-        public ExceptionHandlerMiddleware(ILogger<ExceptionHandlerMiddleware> logger)
+        private readonly bool showException;
+        public ExceptionHandlerMiddleware(ILogger<ExceptionHandlerMiddleware> logger, IConfiguration configuration)
         {
+            showException = configuration.GetValue<string>("OutputExceptionDetail") == "true";
             _logger = logger;
         }
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
@@ -30,13 +33,31 @@ namespace Caf.AspNetCore.ExceptionHandler
             {
                 try
                 {
-                    if(ex is AspectInvocationException)
+                    if (ex is AspectInvocationException)
                     {
                         ex = ex.InnerException;
-                    }                  
+                    }
                     _logger.LogError(ex, ex.Message);
                     context.Response.ContentType = "application/json";
-                    await context.Response.WriteAsync(JsonSerializer.Serialize(new ExceptionResponse {IsSuccess=false,Message = ex.Message, ExceptionDetail = GetExceptionDetail(ex)},options:new JsonSerializerOptions() { PropertyNamingPolicy= JsonNamingPolicy.CamelCase }));
+                    string message = "system error";
+                    if (ex is CafException)
+                    {
+                        message = ex.Message;
+                    }
+
+                    if (showException)
+                    {
+                        await context.Response.WriteAsync(JsonSerializer.Serialize(new ExceptionResponse { IsSuccess = false, Message = message, ExceptionDetail = GetExceptionDetail(ex) }, options: new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+                    }
+                    else
+                    {
+                        await context.Response.WriteAsync(JsonSerializer.Serialize(new ExceptionResponse { IsSuccess = false, Message = message }, options: new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+                    }
+
+
+
+
+
                 }
                 catch
                 {

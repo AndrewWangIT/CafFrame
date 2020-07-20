@@ -13,5 +13,7 @@ namespace MongodbTest
 
         }
         public IMongoCollection<UserBehavior> userBehaviors { get; set; }
+        public IMongoCollection<UserBehaviorGroup> userBehaviorGroups { get; set; }
+        
     }
 }

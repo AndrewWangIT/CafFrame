@@ -29,6 +29,8 @@ namespace Caf.Kafka.Consumer
 
         public BrokerAddress BrokerAddress => new BrokerAddress("Kafka", _kafkaOptions.Servers);
 
+        public string CurrentGroupId => _groupId;
+
         public void Subscribe(IEnumerable<string> topics)
         {
             if (topics == null)

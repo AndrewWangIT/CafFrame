@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Caf.AppSetting.Model;
 using Caf.AppSetting.ServiceCollectionExtention;
+using Caf.Core.AppSetting;
 using Caf.Core.DataModel.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Caf.AppSetting.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]/[action]")]   
     public class AppSettingByCafsController : Controller
     {
         private readonly IAppSettingsService _appSettingsService;

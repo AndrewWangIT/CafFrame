@@ -7,13 +7,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Caf.AspNetCore.Caf.Cors;
 using Microsoft.Extensions.Options;
-using Capgemini.Caf;
+using Cafgemini.Caf;
 using Caf.Core.DependencyInjection;
 using Microsoft.AspNetCore.Http;
 using Caf.Core;
 using Caf.Core.Caf.File;
 
-namespace Capgemini.Frame.AspNetCore
+namespace Cafgemini.Frame.AspNetCore
 {
     
     public class CafAspNetCoreModule : CafModule

@@ -20,7 +20,6 @@ namespace Caf.Kafka.Producer
         {
             _kafkaTransport = kafkaTransport;
         }
-        //private Dictionary<string, Type> dic = new Dictionary<string, Type>();
         private ConcurrentDictionary<string, List<IntegrationHandlerDesc>> eventStore = new ConcurrentDictionary<string, List<IntegrationHandlerDesc>>();//eventTopic 与handle的映射关系
         public async Task publish<T>(T eventData) where T : IntegrationEvent
         {
@@ -34,8 +33,8 @@ namespace Caf.Kafka.Producer
                 //xxx
             }
             else
-            {                
-                //store fail message
+            {
+                throw new EventPublishException(result.Exception);
             }
         }
 

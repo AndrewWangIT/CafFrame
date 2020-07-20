@@ -38,7 +38,7 @@ namespace Caf.Kafka.Common
         public string Servers { get; set; }
 
         /// <summary>
-        /// If you need to get offset and partition and so on.., you can use this function to write additional header into <see cref="CapHeader"/>
+        /// If you need to get offset and partition and so on.., you can use this function to write additional header into <see cref="CafHeader"/>
         /// </summary>
         public Func<ConsumeResult<string, byte[]>, List<KeyValuePair<string, string>>> CustomHeaders { get; set; }
 
@@ -55,8 +55,8 @@ namespace Caf.Kafka.Common
                 MainConfig["queue.buffering.max.ms"] = "10";
                 MainConfig["enable.auto.commit"] = "false";
                 MainConfig["log.connection.close"] = "false";
-                MainConfig["request.timeout.ms"] = "3000";
-                MainConfig["message.timeout.ms"] = "5000";
+                MainConfig["request.timeout.ms"] = "10000";
+                MainConfig["message.timeout.ms"] = "10000";
 
                 _kafkaConfig = MainConfig.AsEnumerable();
             }

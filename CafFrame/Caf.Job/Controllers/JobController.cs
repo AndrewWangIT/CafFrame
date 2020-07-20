@@ -1,4 +1,5 @@
 ﻿using Caf.Job.Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Quartz;
@@ -11,6 +12,7 @@ namespace Caf.Job.Controllers
     /// 任务调度
     /// </summary>
     [Route("api/[controller]/[Action]")]
+    [Authorize]
     //[EnableCors("AllowSameDomain")] //允许跨域 
     public class JobController : Controller
     {

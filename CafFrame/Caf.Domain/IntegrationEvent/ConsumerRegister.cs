@@ -55,40 +55,60 @@ namespace Caf.Domain.IntegrationEvent
             {
                 for (int i = 0; i < _options.ConsumerThreadCount; i++)
                 {
-                    Task.Factory.StartNew(() =>
-                    {
-                        try
-                        {
-                            using (var client = _consumerClientFactory.Create(matchGroup.Key))
-                            {
-                                _serverAddress = client.BrokerAddress;
-
-                                RegisterMessageProcessor(client);
-
-                                client.Subscribe(matchGroup.Value);
-
-                                client.Listening(_pollingDelay, _cts.Token);
-                            }
-                        }
-                        catch (OperationCanceledException)
-                        {
-                            //ignore
-                        }
-                        catch (BrokerConnectionException e)
-                        {
-                            _isHealthy = false;
-                            _logger.LogError(e, e.Message);
-                        }
-                        catch (Exception e)
-                        {
-                            _logger.LogError(e, e.Message);
-                        }
-                    }, _cts.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+                    DoWork(matchGroup);
                 }
             }
             _compositeTask = Task.CompletedTask;
         }
 
+        private void DoWork(KeyValuePair<string,List<string>> matchGroup)
+        {
+            Task.Factory.StartNew(() =>
+            {
+                try
+                {
+                    _logger.LogInformation($"启调新work线程，线程Id:{Thread.CurrentThread.ManagedThreadId.ToString()}");
+                    using (var client = _consumerClientFactory.Create(matchGroup.Key))
+                    {
+                        _serverAddress = client.BrokerAddress;
+
+                        RegisterMessageProcessor(client);
+
+                        client.Subscribe(matchGroup.Value);
+
+                        client.Listening(_pollingDelay, _cts.Token);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    //ignore
+                }
+                catch (BrokerConnectionException e)
+                {
+                    //_isHealthy = false;
+                    _logger.LogError(e,  "BrokerConnectionException:"+ e.Message);
+
+                    DoWork(matchGroup);
+                    _logger.LogInformation("准备销毁当前线程");
+                    try { System.Threading.Thread.CurrentThread.Abort(); }
+                    catch
+                    {
+                        _logger.LogInformation("当前线程已销毁");
+                    }
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e, "OtherException:"+ e.Message);
+                    DoWork(matchGroup);
+                    _logger.LogInformation("准备销毁当前线程");
+                    try { System.Threading.Thread.CurrentThread.Abort(); }
+                    catch
+                    {
+                        _logger.LogInformation("当前线程已销毁");
+                    }
+                }
+            }, _cts.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+        }
         public void ReStart(bool force = false)
         {
             if (!IsHealthy() || force)
@@ -134,7 +154,7 @@ namespace Caf.Domain.IntegrationEvent
 
         private void RegisterMessageProcessor(IConsumerClient client)
         {
-            client.OnMessageReceived += async (sender, transportMessage) =>
+            client.OnMessageReceived += (sender, transportMessage) =>
             {
                 var handlerDescs = new List<IntegrationHandlerDesc>();
                 try
@@ -150,19 +170,43 @@ namespace Caf.Domain.IntegrationEvent
                             var handlerobj = scope.ServiceProvider.GetRequiredService(handlerDesc.HandlerType);
                             var eventdata = JsonConvert.DeserializeObject(Encoding.UTF8.GetString(transportMessage.Body), handlerDesc.IntegrationEventType);
                             var handlerTask = handlerDesc.HandlerMethod.Invoke(handlerobj, new object[] { eventdata, transportMessage, _cts.Token }) as Task;
-                            await handlerTask;
+                            handlerTask?.ConfigureAwait(false).GetAwaiter().GetResult();
                         }
                     }
                 }
                 catch (Exception e)
                 {
                     _logger.LogError(e, "An exception occurred when process received message. Message:'{0}'.", transportMessage);
-                    await _consumerErrHandler.HandleConsumerErr(new ConsumerMessageContext { ex = e, integrationHandlerDescs = handlerDescs, message = transportMessage });
+                    _consumerErrHandler.HandleConsumerErr(new ConsumerMessageContext { ex = e, integrationHandlerDescs = handlerDescs, message = transportMessage }).ConfigureAwait(false).GetAwaiter().GetResult(); 
                     //client.Reject(sender);
                 }
                 finally
                 {
-                    client.Commit(sender);
+                    try
+                    {
+                        client.Commit(sender);
+                    }
+                    catch (Exception e)
+                    {                       
+                        _logger.LogError(e, "An exception occurred when Commit offset. Message:'{0}'.", transportMessage);
+                        client.Reject(sender);
+                        //var groupingMatches = _integrationEventBus.GetGroups();
+                        //var group = groupingMatches.Where(o => o.Key == client.CurrentGroupId).FirstOrDefault();
+                        //_logger.LogInformation("准备销毁KafkaClient连接");
+                        //client.Dispose();
+                        //_logger.LogInformation("KafkaClient连接已销户");
+
+                        //DoWork(group);
+                        //_logger.LogInformation("准备销毁当前线程");
+                        //try { System.Threading.Thread.CurrentThread.Abort(); }
+                        //catch
+                        //{
+                        //    _logger.LogInformation("当前线程已销毁");
+                        //}
+
+
+                    }
+                    
                 }
             };
 

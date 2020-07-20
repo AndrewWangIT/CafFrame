@@ -4,9 +4,8 @@ using System.Text;
 
 namespace Caf.MongoDB.MongoDB
 {
-    public interface IMongoDbContextProvider<out TMongoDbContext>
-        where TMongoDbContext : ICafMongoDbContext
+    public interface IMongoDbContextProvider<TMongoDbContext>
     {
-        TMongoDbContext GetDbContext();
+        ICafMongoDbContext GetDbContext();
     }
 }

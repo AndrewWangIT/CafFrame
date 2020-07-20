@@ -37,8 +37,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BenchmarkTest", "BenchmarkT
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{E982F80A-CEF4-4027-B9B0-C07B9F367237}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caf.Wechat", "Caf.Wechat\Caf.Wechat.csproj", "{0DBDA522-B636-44DD-948E-41D52B3A32CA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caf.AppSetting", "Caf.AppSetting\Caf.AppSetting.csproj", "{E703F4C6-AE19-4024-A2F1-3DEA8D40620B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppSettingTest", "AppSettingTest\AppSettingTest.csproj", "{1ED01B2E-1823-40E1-8978-319546341A59}"
@@ -47,7 +45,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caf.MongoDB", "Caf.MongoDB\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongodbTest", "MongodbTest\MongodbTest.csproj", "{0C6288A4-950E-4F2D-AA5C-02F63255096B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caf.Kafka", "Caf.KafKa\Caf.Kafka.csproj", "{1E7A0D13-4709-487B-A7D4-BCB8333A1D54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caf.Kafka", "Caf.KafKa\Caf.Kafka.csproj", "{1E7A0D13-4709-487B-A7D4-BCB8333A1D54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -119,10 +117,6 @@ Global
 		{57774233-42F1-4072-BA27-37A76039BD81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57774233-42F1-4072-BA27-37A76039BD81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57774233-42F1-4072-BA27-37A76039BD81}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0DBDA522-B636-44DD-948E-41D52B3A32CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0DBDA522-B636-44DD-948E-41D52B3A32CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0DBDA522-B636-44DD-948E-41D52B3A32CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0DBDA522-B636-44DD-948E-41D52B3A32CA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E703F4C6-AE19-4024-A2F1-3DEA8D40620B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E703F4C6-AE19-4024-A2F1-3DEA8D40620B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E703F4C6-AE19-4024-A2F1-3DEA8D40620B}.Release|Any CPU.ActiveCfg = Release|Any CPU

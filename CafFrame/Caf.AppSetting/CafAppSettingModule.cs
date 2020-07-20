@@ -23,6 +23,9 @@ namespace Caf.AppSetting
             JudgeConfigureConn(context);
             context.Services.AddSingleton(typeof(AppSettingsConfigure));
             context.Services.AddTransient<IAppSettingsService, AppSettingsService>();
+
+            context.Services.Configure<AccountOption>(context.Configuration.GetSection(
+                                        nameof(AccountOption)));
         }
         public override void OnApplicationInitialization(CafApplicationContext context)
         {

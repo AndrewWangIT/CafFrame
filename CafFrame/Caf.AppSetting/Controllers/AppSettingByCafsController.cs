@@ -24,6 +24,18 @@ namespace Caf.AppSetting.Controllers
             return "OK";
         }
 
+        [HttpPost]
+        public async Task<ResponseBase<LoginResViewModel>> Login([FromBody]LoginViewModel model) 
+        {
+            return await _appSettingsService.LoginAsync(model);
+        }
+
+        [HttpGet]
+        public async Task<ResponseBase> IsLogin(string token) 
+        {
+            return await _appSettingsService.IsLogin(token);
+        }
+
         [HttpGet]
         public async Task<ResponseBase> Delete(string key) 
         {

@@ -20,5 +20,9 @@ namespace Caf.AppSetting.ServiceCollectionExtention
         Task<PagedResponse<AppSettingViewModel>> QueryPageList(AppSettingPageRequest request);
 
         Task<List<AppSettingViewModel>> GetListAsync(params string[] keys);
+
+        Task<ResponseBase<LoginResViewModel>> LoginAsync(LoginViewModel model);
+
+        Task<ResponseBase> IsLogin(string token);
     }
 }

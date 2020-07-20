@@ -4,12 +4,16 @@ using Caf.Cache;
 using Caf.Core.DataModel.Http;
 using Caf.Core.Utils.Ext;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Caf.AppSetting.ServiceCollectionExtention
@@ -18,11 +22,16 @@ namespace Caf.AppSetting.ServiceCollectionExtention
     {
         private readonly CafAppsettingDbContext _dbContext;
         private readonly ICafCache _cafCache;
+        private readonly AccountOption _accOption;
 
-        public AppSettingsService(CafAppsettingDbContext dbContext, ICafCache cafCache)  
+        private const string backadmin = nameof(backadmin);
+
+
+        public AppSettingsService(CafAppsettingDbContext dbContext, ICafCache cafCache, IOptionsSnapshot<AccountOption> options)  
         {
             _dbContext = dbContext;
             _cafCache = cafCache;
+            _accOption = options.Value;
         }
 
         public async Task<ResponseBase> DeleteAsync(string key)
@@ -154,6 +163,56 @@ namespace Caf.AppSetting.ServiceCollectionExtention
             }
 
             return ret;
+        }
+
+        public async Task<ResponseBase<LoginResViewModel>> LoginAsync(LoginViewModel model) 
+        {
+            ResponseBase<LoginResViewModel> ret = new ResponseBase<LoginResViewModel>() { IsSuccess=true };
+            if (_accOption == null)
+            {
+                ret.IsSuccess = false;
+                ret.Message = "用户或密码未正确配置！";
+                return ret;
+            }
+            //await _dbContext.AppSettingByCafs.FirstOrDefaultAsync(u => u.Key == model.UserName && u.Value==model.Password);
+            if (_accOption.UserName!=model.UserName || _accOption.Password!=model.Password)  
+            {
+                ret.IsSuccess = false;
+                ret.Message = "用户或密码不正确！";
+                return ret;
+            }
+            var md5 = MD5Encrypt($"Caf:{model.UserName}:{model.Password}");
+            _cafCache.Put(backadmin, md5, 60 * 20);
+            ret.Data = new LoginResViewModel { Token = md5 };
+            return ret;
+        }
+
+        public async Task<ResponseBase> IsLogin(string token) 
+        {
+            ResponseBase ret = new ResponseBase() { IsSuccess = true };
+            var enti = _cafCache.Get(backadmin);
+            if (enti == null || enti!=token)   
+            {
+                ret.IsSuccess = false;
+                ret.Message = "重新登录";
+                return ret;
+            }
+            var md5 = MD5Encrypt($"Caf:{_accOption.UserName}:{_accOption.Password}");
+            if (token!=md5)
+            {
+                ret.IsSuccess = false;
+                ret.Message = "密码已变更，重新登录";
+                return ret;
+            }
+            return ret;
+        }
+
+        private static string MD5Encrypt(string str)
+        {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            byte[] bytes = Encoding.UTF8.GetBytes(str);
+            string result = BitConverter.ToString(md5.ComputeHash(bytes));
+            return result.Replace("-", "");
         }
     }
 }

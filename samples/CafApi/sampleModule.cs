@@ -29,6 +29,7 @@ using Caf.Domain.IntegrationEvent;
 using Caf.Kafka;
 using Caf.AppSetting;
 using Caf.Core.AppSetting;
+using CafApi.ApplicationService;
 
 namespace CafApi
 {
@@ -39,6 +40,7 @@ namespace CafApi
     //[UsingModule(typeof(DynamicWebApiModule))]
     [UsingModule(typeof(MongodbTestMoudle))]
     [UsingModule(typeof(CafKafkaModule))]
+    [UsingModule(typeof(ApplicationServiceModule))]
     public class sampleModule:CafModule
     {
       
@@ -99,7 +101,7 @@ namespace CafApi
                 options.JsonSerializerOptions.PropertyNameCaseInsensitive = false;
             }).AddControllersAsServices().AddMvcLocalization();
 
-           //context.Services.AddDynamicWebApi();
+           context.Services.AddDynamicWebApi();
 
             context.Services.AddIntegrationEventBus(x =>
             {

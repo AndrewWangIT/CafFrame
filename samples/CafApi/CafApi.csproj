@@ -17,6 +17,7 @@
  <ProjectReference Include="../../CafFrame/Caf.Grpc/Caf.Grpc.csproj" />
  <ProjectReference Include="..\..\CafFrame\Caf.Job\Caf.Job.csproj" />
  <ProjectReference Include="..\..\CafFrame\Caf.KafKa\Caf.Kafka.csproj" />
+ <ProjectReference Include="..\..\CafFrame\CafApi.ApplicationService\CafApi.ApplicationService.csproj" />
  <ProjectReference Include="..\..\CafFrame\MongodbTest\MongodbTest.csproj" />
  </ItemGroup>
   <ItemGroup>

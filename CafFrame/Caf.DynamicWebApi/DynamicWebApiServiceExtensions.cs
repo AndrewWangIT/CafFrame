@@ -1,4 +1,5 @@
 using System;
+using Caf.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,8 +22,10 @@ namespace Caf.DynamicWebApi
                 throw new InvalidOperationException ("\"AddDynamicWebApi\" must be after \"AddMvc\".");
             }
             // Add a custom controller checker
+            var assembly = typeof(IDynamicWebApiService).Assembly;
+            partManager.ApplicationParts.Add(new AssemblyPart(assembly));
             partManager.FeatureProviders.Add (new DynamicWebApiControllerFeatureProvider ());
-
+            
             services.Configure<MvcOptions> (o => {
                 // Register Controller Routing Information Converter
                 o.Conventions.Add (new DynamicWebApiConvention ());

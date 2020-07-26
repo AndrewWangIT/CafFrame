@@ -11,6 +11,12 @@ namespace CafApi.DynamicServices
         {
             return "";
         }
-        
+
+
+
+        public string TestDynamicApi(int id)
+        {
+            return "";
+        }
     }
 }

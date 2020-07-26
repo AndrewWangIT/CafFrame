@@ -47,6 +47,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongodbTest", "MongodbTest\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caf.Kafka", "Caf.KafKa\Caf.Kafka.csproj", "{1E7A0D13-4709-487B-A7D4-BCB8333A1D54}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CafApi.ApplicationService", "CafApi.ApplicationService\CafApi.ApplicationService.csproj", "{B9D2F16E-25C4-48C7-96FD-BB846F94F1C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +139,10 @@ Global
 		{1E7A0D13-4709-487B-A7D4-BCB8333A1D54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E7A0D13-4709-487B-A7D4-BCB8333A1D54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E7A0D13-4709-487B-A7D4-BCB8333A1D54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9D2F16E-25C4-48C7-96FD-BB846F94F1C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9D2F16E-25C4-48C7-96FD-BB846F94F1C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9D2F16E-25C4-48C7-96FD-BB846F94F1C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9D2F16E-25C4-48C7-96FD-BB846F94F1C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -147,6 +153,7 @@ Global
 		{57774233-42F1-4072-BA27-37A76039BD81} = {E982F80A-CEF4-4027-B9B0-C07B9F367237}
 		{1ED01B2E-1823-40E1-8978-319546341A59} = {E982F80A-CEF4-4027-B9B0-C07B9F367237}
 		{0C6288A4-950E-4F2D-AA5C-02F63255096B} = {E982F80A-CEF4-4027-B9B0-C07B9F367237}
+		{B9D2F16E-25C4-48C7-96FD-BB846F94F1C0} = {E982F80A-CEF4-4027-B9B0-C07B9F367237}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A3AFFA56-C6E9-4E6A-B6B6-592CC73B5505}

@@ -51,7 +51,13 @@ namespace Caf.Job
         private SchedulerCenter GetScheduler(CafConfigurationContext context)
         {
             string dbProviderName = context.Configuration.GetSection("Quartz")["dbProviderName"];
-            string connectionString = context.Configuration.GetSection("Quartz")["connectionString"];
+            //string connectionString = context.Configuration.GetSection("Quartz")["connectionString"];
+
+            var connectionString = context.Services.BuildServiceProvider().GetService<IOptions<Caf.Job.Entity.Quartz>>().Value.connectionString;
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                connectionString = context.Configuration.GetSection("Quartz")["connectionString"];
+            }
 
             string driverDelegateType = string.Empty;
 

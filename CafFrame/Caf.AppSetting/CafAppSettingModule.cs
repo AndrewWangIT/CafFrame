@@ -58,6 +58,10 @@ namespace Caf.AppSetting
             //string conn = context.Configuration.GetSection("ConnectionStrings")["AppSettingsConnection"];
 
             var conn = context.Services.BuildServiceProvider().GetService<IOptions<ConnectionStrings>>().Value.AppSettingsConnection;
+            if (string.IsNullOrWhiteSpace(conn))
+            {
+                conn = context.Configuration.GetSection("ConnectionStrings")["AppSettingsConnection"];
+            }
             try
             {
                 context.Services.AddDbContext<CafAppsettingDbContext>(options => options.UseSqlServer(conn));

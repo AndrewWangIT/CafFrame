@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Options;
 using Quartz.Impl.AdoJobStore;
 using Quartz.Impl.AdoJobStore.Common;
 using System;
@@ -84,7 +85,13 @@ namespace Caf.Job
         private void JudgeConfigureConn(CafConfigurationContext context)
         {
             //notice:使用方需要指定配置AppSettingsConnection
-            string conn = context.Configuration.GetSection("Quartz")["connectionString"];
+            //string conn = context.Configuration.GetSection("Quartz")["connectionString"];
+
+            var conn = context.Services.BuildServiceProvider().GetService<IOptions<Caf.Job.Entity.Quartz>>().Value.connectionString;
+            if (string.IsNullOrWhiteSpace(conn))
+            {
+                conn = context.Configuration.GetSection("Quartz")["connectionString"];
+            }
             try
             {
                 //var dboptions = new DbContextOptionsBuilder<CafAppsettingDbContext>().UseSqlServer(conn); ;

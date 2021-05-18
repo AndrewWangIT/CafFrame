@@ -11,4 +11,10 @@ namespace Caf.AppSetting
 
         public string Password { get; set; }
     }
+
+
+    public class ConnectionStrings 
+    {
+        public string AppSettingsConnection { get; set; }
+    }
 }

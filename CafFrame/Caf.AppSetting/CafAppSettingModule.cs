@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Options;
 using System;
 
 namespace Caf.AppSetting
@@ -54,7 +55,9 @@ namespace Caf.AppSetting
         private void JudgeConfigureConn(CafConfigurationContext context) 
         {
             //notice:使用方需要指定配置AppSettingsConnection
-            string conn = context.Configuration.GetSection("ConnectionStrings")["AppSettingsConnection"];
+            //string conn = context.Configuration.GetSection("ConnectionStrings")["AppSettingsConnection"];
+
+            var conn = context.Services.BuildServiceProvider().GetService<IOptions<ConnectionStrings>>().Value.AppSettingsConnection;
             try
             {
                 context.Services.AddDbContext<CafAppsettingDbContext>(options => options.UseSqlServer(conn));
